@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>？发现一个奇怪的网站</title>
+    <style type="text/css">
+        body{
+            min-height: 100vh;
+            background: url(/get_img/back.jpg);
+            background-repeat:no-repeat;
+            background-size: cover;
+            background-attachment:fixed;
+            background-position:50% 50%;
+        }
+        *{
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+        .top{
+            display: flex;
+            width: 100vw;
+            height: 200px;
+            border-radius: 16px;
+            display: block;
+            text-align: center;
+            background: url(/get_img/back.jpg);
+            background-repeat:no-repeat;
+            background-size: cover;
+            background-attachment:fixed;
+            background-position:50% 50%;
+        }
+        .top div{
+            padding: 16px 0;
+        }
+        .top button{
+            margin-top: 20px;
+            height: 50px;
+            width: 150px;
+            border: 0;
+            border-radius: 16px;
+            background-color: rgb(140, 208, 224);
+        }
+        .top button:active{
+            transform: scale(0.98);
+        }
+        .png_list{
+            flex-wrap: wrap;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .png_list img{
+            /* object-fit:contain; */
+            margin: 10px 10px;
+            padding: 1.5px;
+            height: 300px;
+        }
+        #b1{
+            opacity: 0.8;
+            border: none;
+            width: 10vw;
+            max-width: 250px;
+            height: 80px;
+            border-radius: 16px;
+        }
+        #b1:active{
+            transform: scale(0.98);
+        }
+        
+        @media screen and (max-width: 600px){
+            .png_list img{
+                max-width: 100vw;
+                height: auto;
+            }
+            .png_list img{
+                margin-top: 10px;
+                padding: 0;
+            }
+            #b1{
+                width: 70px;
+                height: 50px;
+                border-radius: 35px;
+            }
+            
+
+        }
+    </style>
+    <script>
+        png_list = {list_:[]}
+        var msg = '';
+        function getlist(){
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function(){
+                if (this.status == 200 && this.readyState == 4){
+                    var response = this.responseText;
+                    jsondata = eval("(" + response + ")");
+                    //filedata:{id:[], list_:[]}
+                    if (jsondata.list_[0] == undefined){
+                        alert(jsondata.msg);
+                    }
+                    for (var i in jsondata.list_){
+                        png_list.list_.push(jsondata.list_[i])
+                        var path = '/fun/get_img/new/'+jsondata.list_[i];
+                        var div_img = document.createElement('img');
+                        div_img.src = path;
+                        var div = document.getElementsByClassName('png_list');
+                        div[0].appendChild(div_img);
+                        msg = jsondata.msg;
+                    }
+                }
+            }
+            xmlhttp.open('POST', '/function2', true);
+            xmlhttp.setRequestHeader("Content-type","application/json");
+            xmlhttp.send(JSON.stringify(png_list));
+        }
+        function a(id){
+            document.getElementById(id).click();
+        }
+        
+    </script>
+</head>
+<body onload="getlist();">
+    <!-- uploadimg -->
+    <a href="/" id="main" style="display: none;"></a>
+    <a href="/fun/uploadimg" id="uploadimg" style="display: none;"></a>
+    <div class="top">
+        <div>
+            <h1>有趣的图片</h1>
+            <p>仅供娱乐，如需删除， 联系qq:1545498034</p>
+            <button onclick="a('main');">返回主页</button>
+        </div>
+    </div>
+    <div class="png_list">
+        
+    </div>
+    <div style="position: fixed; bottom: 0; margin: 0 auto;" id="b">
+        <button onclick="getlist();" id="b1">查看更多</button>
+    </div>
+</body>
+</html>

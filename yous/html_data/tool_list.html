@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>For you</title>
+        <style type="text/css">
+            body{
+                /* overflow: hidden; */
+                min-height: 100vh;
+                background: url(https://tu.ltyuanfang.cn/api/fengjing.php);
+                background-repeat:no-repeat;
+                background-size: cover;
+                background-position:50% 50%;
+            }
+            *{
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+            .top{
+                display: flex;
+                padding: 30px;
+                width: 100%;
+                height: 200px;
+                background-color: rgb(168, 238, 255,0.5);
+                display: flex;
+                text-align: center;
+                justify-content: center;
+                align-items: center;
+            }
+            
+            .top button{
+                margin-top: 20px;
+                height: 50px;
+                width: 150px;
+                border: 0.5px;
+                background-color: rgb(140, 208, 224);
+                
+            }
+            .top button:active{
+                transform: scale(0.98);
+            }
+            .main{
+                -webkit-user-select:none;
+                -moz-user-select:none;
+                -ms-user-select:none;
+                user-select:none;
+                display: flex;
+                height: 85%;
+            }
+
+            .left{
+                visibility: hidden;
+                background-color: rgb(221, 221, 221);
+                width: 15vw;
+                height: 100%;
+                float: left;
+            }
+            .middle{
+                flex-wrap: wrap;
+                display: flex;
+                width: 70vw;
+                height: 85%;
+                /* background-color: black; */
+                margin-bottom: 20vh;
+            }
+            .right{
+                visibility: hidden;
+                height: 100%;
+                width: 15vw;
+                background-color: rgb(221, 221, 221);
+                float: right;
+            }
+            .middle div{
+		display: flex;
+		                align-items: center;
+				                justify-content: center;
+		    background-color: rgb(65, 121, 226,0.5);
+                border-radius: 16px;
+                margin-left: 5%;
+                margin-top: 50px;
+                width: 40%;
+                height: 25vh;
+            }
+            .middle div:active{
+                transform: scale(0.98);
+            }
+            .middle div p{
+                
+                font-size: 25px;
+                margin-top: 10%;
+            }
+
+            @media screen and (max-width: 600px){
+                body{
+                    height: auto;
+                }
+                .left, .right{
+                    display: none;
+                }
+                .middle{
+                    width: 95vw;
+                }
+                .middle div{
+                    width: 100%;
+                }
+                .middle div:hover{
+                    transform: scale(0.98);
+                }
+            }
+            
+
+        </style>
+        <script>
+            function clitckfor(id){
+                document.getElementById(id).click();
+            }
+        </script>
+    </head>
+<body onload="">
+    <a href="/" id="main" style="display: none;"></a>
+    <div>
+        <a href="/tool/uploadfile_page" id="1"></a>
+        <a href="/tool/download_page" id="2"></a>
+        <a href="#" id="3"></a>
+    </div>
+    <div class="top">
+        <div>
+            <h1>站主小工具</h1>
+            <button onclick="clitckfor('main');">返回主页</button>
+        </div>
+    </div>
+    <div class="main">
+        <div class="left"></div>
+        <div class="middle">
+            <div onclick="clitckfor('1');"><p>文件上传</p></div>
+            <div onclick="clitckfor('2');"><p>文件下载</p></div>
+            <div onclick="function b(){alert('未完待续');}"><p>未完待续</p></div>
+        </div>
+        <div class="right"></div>
+    </div>
+
+</body>
+</html>

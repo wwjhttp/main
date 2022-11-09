@@ -1,0 +1,7 @@
+/yous
+    server.py  #启动文件
+    /html_data  #放html文件的
+    /image  #放图片
+        /fun  # html_data/fun.html里的图片都放在fun文件夹里
+        /new_img
+    /upload 存放用户上传的文件

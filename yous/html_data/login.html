@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>upload_nweimg</title>
+    <style>
+        body{
+            min-height: 100vh;
+            background: url(https://tu.ltyuanfang.cn/api/fengjing.php);
+            background-repeat:no-repeat;
+            background-size: cover;
+            background-position:50% 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            }
+            .back{
+                height: 500px;
+                width: 500px;
+                background-color: rgb(18, 151, 222, 0.5);
+                display: flex;
+                /* justify-content: center; */
+                align-items: center;
+                flex-direction: column;
+            }
+            .back input{
+                width: 80%;
+                height: 10%;
+                margin-top: 50px;
+                border-radius: 16px;
+            }
+            #but1{
+                margin-top: 20%;
+                width: 80%;
+                height: 10%;
+            }
+
+    </style>
+    <script>
+        function a(){
+            var name = document.getElementById('name').value;
+            var password = document.getElementById('password').value;
+            var data = {'name':name, 'password':password};
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function(){
+                if (this.status == 200 && this.readyState == 4){
+                    var response = this.responseText;
+                    jsondata = eval("(" + response + ")");
+                    if (jsondata.code == 200){
+                        var a = document.getElementById('a');
+                        a.href = jsondata.url;
+                        a.click();
+                    }
+
+                    else{
+                        alert(jsondata.msg);
+                    }
+                }
+            }
+            xmlhttp.open('post', '/new_login/updata', true);
+            xmlhttp.setRequestHeader("Content-type","application/json");
+            xmlhttp.send(JSON.stringify(data));
+        }
+    
+    </script>
+</head>
+<body>
+    <a href="" style="display: none;" id="a" target="_self"></a>
+    <div class="back">
+        <input type="text" id="name">
+        <input type="text" id="password">
+        <button id="but1" onclick="a();">确认登录</button>
+    </div>
+
+</body>
+</html>

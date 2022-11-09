@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download File</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            height: 100vh;
+            background: url(https://tu.ltyuanfang.cn/api/fengjing.php);
+            background-repeat:no-repeat;
+            background-size: cover;
+            background-attachment:fixed;
+            background-position:50% 50%;
+        }
+        .box{
+            display: flex;
+        }
+        .left{
+            opacity: 0.6;
+            display: flex;
+            width: 20vw;
+            height: 80vh;
+            background-color: white;
+            text-align: center;
+            font-size: 20px;
+            overflow: auto;
+            flex-wrap: wrap;
+            white-space:pre-wrap;
+            /* overflow: hidden; */
+        }
+        .left p{
+            /* max-width: 100%; */
+            width: 100%;
+            overflow: auto;
+            text-align: center;
+            padding: 20px 30px;
+            margin: auto;
+            font-size: 25px;
+            -moz-user-select: none;
+            -khtml-user-select: none;
+            user-select: none;
+            font-style: italic;
+            
+        }
+        .left p:hover{
+            color: white;
+            background-color: black;
+        }
+        .left p:active{
+            transform: scale(0.98);
+        }
+        .left button{
+            border-radius: 16px;
+            height: 30px;
+            /* margin-top: 10px; */
+            margin: 5px;
+        }
+        .file_show{
+            margin-left: 20px;
+            width: 80vw;
+            height: 100vh;
+            background-color: white;
+            border-radius: 6px;
+        }
+        #b1{
+            position: fixed;
+            bottom: 0;
+            max-width: 0 auto;
+            border-radius: 16px;
+            height: 10vh;
+            width: 15vw;
+            opacity: 0.9;
+            
+        }
+        #but1{
+            width: 100%;
+            height: 40px;
+        }
+
+        @media screen and (max-width: 600px){
+            .box{
+                flex-direction: column;
+            }
+            .left{
+                height: 30vh;
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            .file_show{
+                left: 20px;
+                height: 68vh;
+                width: 90%;
+                margin: 0;
+            }
+            #b1{
+                height: 50px;
+                width: 100px;
+            }
+        }
+    </style>
+    <script>
+        function b(){
+            document.getElementById('a').click();
+        }
+        function click_for(id){
+            document.getElementById(id).click();
+        }              
+        function get_file_list(){
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open('post', '/tool/get_file_list', true)
+            xmlhttp.onreadystatechange = function(){
+                if (this.readyState == 4 && this.status == 200){
+                    var response = this.responseText;
+                    jsondata = eval("(" + response + ")");
+                    // var name = data.substring(0,data.indexOf("."));
+                    for (var i in jsondata){
+                        let tmp = i;
+                        var div_a = document.createElement('a');
+                        div_a.href = '/tool/get_file/'+jsondata[i];
+                        div_a.id = tmp;
+                        div_a.target = 'iframe';
+                        var div_p = document.createElement('p');
+                        div_p.innerHTML = jsondata[i];
+                        div_p.onclick = function(){
+                            document.getElementById('a').download = jsondata[tmp].substring(0,jsondata[tmp].indexOf("."));
+                            document.getElementById('a').href = '/tool/download_file/'+jsondata[tmp];
+                            document.getElementById(tmp).click();
+                        }
+                        var dom_div = document.getElementsByClassName('left');
+                        dom_div[0].appendChild(div_p);
+                        dom_div[0].appendChild(div_a);
+                    }
+
+                }
+            }
+            xmlhttp.send();
+        }
+    </script>
+</head>
+<body onload="get_file_list();">
+    <div style="display: none;" class="nobody">
+        <a href="/tool-list" id="return"></a>
+        <a id="zhuantiao" target="iframe"></a>
+        <a id="a"></a>
+    </div>
+
+    <div class="box">
+        <div class="left">
+            <button id="but1" onclick="click_for('return');">返回</button>
+        </div>
+        <!-- <div class="file_show"></div> -->
+        <iframe class="file_show" frameborder="0" name="iframe"></iframe>
+    </div>
+    <button id="b1" onclick="b();">下载</button>
+</body>
+</html>
